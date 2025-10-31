@@ -13,8 +13,16 @@
 - twitch configure
 - log in with <client_id> and <secret_id>
 
+fill .env with
+
+```ini
+CLIENT_ID=
+SECRET_ID=
+```
+
 ## Launch multitwitch link
 
-- python get_token.py
-- python multitwitch.py <client_id> <access_token>
+install dependencies : pip install dotenv
 
+- python get_token.py
+- python multitwitch.py

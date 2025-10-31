@@ -2,7 +2,10 @@
 import requests
 import webbrowser
 import json
-import sys
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def get_user_id(client_id, access_token):
     """Gets the user ID from the Twitch API."""
@@ -89,12 +92,14 @@ def main():
     print("Twitch MultiTwitch URL Generator")
     print("--------------------------------")
     
-    if len(sys.argv) < 3:
-        print("Usage: python multitwitch.py <client_id> <access_token>")
+    try:
+        with open(".token", "r") as f:
+            access_token = f.read().strip()
+    except FileNotFoundError:
+        print("Error: .token file not found. Please run get_token.py first to generate it.")
         return
 
-    client_id = sys.argv[1]
-    access_token = sys.argv[2]
+    client_id = os.getenv("CLIENT_ID")
     
     user_id = get_user_id(client_id, access_token)
     if not user_id:

@@ -36,3 +36,6 @@ if __name__ == "__main__":
     if access_token:
         print("\nAccess token found:")
         print(access_token)
+        with open(".token", "w") as f:
+            f.write(access_token)
+        print("Access token stored in .token file.")
