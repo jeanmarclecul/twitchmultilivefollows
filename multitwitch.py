@@ -3,6 +3,7 @@ import requests
 import webbrowser
 import json
 import os
+import sys
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -123,7 +124,22 @@ def main():
         multitwitch_url = "https://www.multitwitch.tv/" + "/".join(live_channels)
         
         print("Opening the MultiTwitch URL with live channels in your browser...")
-        webbrowser.open(multitwitch_url)
+        if "--operagx" in sys.argv:
+            operagx_path = os.getenv("OPERAGX")
+            if operagx_path:
+                try:
+                    operagx_path = operagx_path.strip('\"')
+                    webbrowser.register('operagx', None, webbrowser.BackgroundBrowser(operagx_path))
+                    webbrowser.get('operagx').open(multitwitch_url)
+                except Exception as e:
+                    print(f"An error occurred while trying to open Opera GX: {e}")
+                    print("Opening in default browser.")
+                    webbrowser.open(multitwitch_url)
+            else:
+                print("OPERAGX path not found in .env file. Opening in default browser.")
+                webbrowser.open(multitwitch_url)
+        else:
+            webbrowser.open(multitwitch_url)
         
         print("Done!")
         
